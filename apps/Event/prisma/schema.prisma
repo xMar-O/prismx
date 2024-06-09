@@ -1,0 +1,35 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Event {
+  createdAt        DateTime          @default(now())
+  description      String?
+  endTime          DateTime?
+  id               String            @id @default(cuid())
+  location         String?
+  startTime        DateTime?
+  title            String?
+  updatedAt        DateTime          @updatedAt
+  userId           String?
+  userInteractions UserInteraction[]
+}
+
+model UserInteraction {
+  createdAt       DateTime                            @default(now())
+  event           Event?                              @relation(fields: [eventId], references: [id])
+  eventId         String?
+  id              String                              @id @default(cuid())
+  interactionType EnumUserInteractionInteractionType?
+  updatedAt       DateTime                            @updatedAt
+  userProfileId   String?
+}
+
+enum EnumUserInteractionInteractionType {
+  Option1
+}
