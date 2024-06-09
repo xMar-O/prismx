@@ -20,10 +20,6 @@ import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { CreateUserArgs } from "./CreateUserArgs";
 import { UpdateUserArgs } from "./UpdateUserArgs";
 import { DeleteUserArgs } from "./DeleteUserArgs";
-import { EventFindManyArgs } from "../../event/base/EventFindManyArgs";
-import { Event } from "../../event/base/Event";
-import { UserProfileFindManyArgs } from "../../userProfile/base/UserProfileFindManyArgs";
-import { UserProfile } from "../../userProfile/base/UserProfile";
 import { UserService } from "../user.service";
 @graphql.Resolver(() => User)
 export class UserResolverBase {
@@ -89,33 +85,5 @@ export class UserResolverBase {
       }
       throw error;
     }
-  }
-
-  @graphql.ResolveField(() => [Event], { name: "events" })
-  async findEvents(
-    @graphql.Parent() parent: User,
-    @graphql.Args() args: EventFindManyArgs
-  ): Promise<Event[]> {
-    const results = await this.service.findEvents(parent.id, args);
-
-    if (!results) {
-      return [];
-    }
-
-    return results;
-  }
-
-  @graphql.ResolveField(() => [UserProfile], { name: "userProfiles" })
-  async findUserProfiles(
-    @graphql.Parent() parent: User,
-    @graphql.Args() args: UserProfileFindManyArgs
-  ): Promise<UserProfile[]> {
-    const results = await this.service.findUserProfiles(parent.id, args);
-
-    if (!results) {
-      return [];
-    }
-
-    return results;
   }
 }

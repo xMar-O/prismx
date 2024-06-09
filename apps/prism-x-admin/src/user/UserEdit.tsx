@@ -1,17 +1,12 @@
 import * as React from "react";
-
 import {
   Edit,
   SimpleForm,
   EditProps,
   TextInput,
-  ReferenceArrayInput,
-  SelectArrayInput,
   PasswordInput,
+  SelectArrayInput,
 } from "react-admin";
-
-import { EventTitle } from "../event/EventTitle";
-import { UserProfileTitle } from "../userProfile/UserProfileTitle";
 import { ROLES_OPTIONS } from "../user/RolesOptions";
 
 export const UserEdit = (props: EditProps): React.ReactElement => {
@@ -19,14 +14,7 @@ export const UserEdit = (props: EditProps): React.ReactElement => {
     <Edit {...props}>
       <SimpleForm>
         <TextInput label="Email" source="email" type="email" />
-        <ReferenceArrayInput
-          source="events"
-          reference="Event"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
-        >
-          <SelectArrayInput optionText={EventTitle} />
-        </ReferenceArrayInput>
+        <div />
         <TextInput label="First Name" source="firstName" />
         <TextInput label="Last Name" source="lastName" />
         <PasswordInput label="Password" source="password" />
@@ -37,14 +25,7 @@ export const UserEdit = (props: EditProps): React.ReactElement => {
           optionValue="value"
         />
         <TextInput label="Username" source="username" />
-        <ReferenceArrayInput
-          source="userProfiles"
-          reference="UserProfile"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
-        >
-          <SelectArrayInput optionText={UserProfileTitle} />
-        </ReferenceArrayInput>
+        <div />
       </SimpleForm>
     </Edit>
   );

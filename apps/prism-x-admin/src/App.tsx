@@ -5,18 +5,6 @@ import { theme } from "./theme/theme";
 import Login from "./Login";
 import "./App.scss";
 import Dashboard from "./pages/Dashboard";
-import { EventList } from "./event/EventList";
-import { EventCreate } from "./event/EventCreate";
-import { EventEdit } from "./event/EventEdit";
-import { EventShow } from "./event/EventShow";
-import { UserProfileList } from "./userProfile/UserProfileList";
-import { UserProfileCreate } from "./userProfile/UserProfileCreate";
-import { UserProfileEdit } from "./userProfile/UserProfileEdit";
-import { UserProfileShow } from "./userProfile/UserProfileShow";
-import { UserInteractionList } from "./userInteraction/UserInteractionList";
-import { UserInteractionCreate } from "./userInteraction/UserInteractionCreate";
-import { UserInteractionEdit } from "./userInteraction/UserInteractionEdit";
-import { UserInteractionShow } from "./userInteraction/UserInteractionShow";
 import { UserList } from "./user/UserList";
 import { UserCreate } from "./user/UserCreate";
 import { UserEdit } from "./user/UserEdit";
@@ -47,27 +35,6 @@ const App = (): React.ReactElement => {
         dashboard={Dashboard}
         loginPage={Login}
       >
-        <Resource
-          name="Event"
-          list={EventList}
-          edit={EventEdit}
-          create={EventCreate}
-          show={EventShow}
-        />
-        <Resource
-          name="UserProfile"
-          list={UserProfileList}
-          edit={UserProfileEdit}
-          create={UserProfileCreate}
-          show={UserProfileShow}
-        />
-        <Resource
-          name="UserInteraction"
-          list={UserInteractionList}
-          edit={UserInteractionEdit}
-          create={UserInteractionCreate}
-          show={UserInteractionShow}
-        />
         <Resource
           name="User"
           list={UserList}

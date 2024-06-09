@@ -22,12 +22,6 @@ import { User } from "./User";
 import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserWhereUniqueInput } from "./UserWhereUniqueInput";
 import { UserUpdateInput } from "./UserUpdateInput";
-import { EventFindManyArgs } from "../../event/base/EventFindManyArgs";
-import { Event } from "../../event/base/Event";
-import { EventWhereUniqueInput } from "../../event/base/EventWhereUniqueInput";
-import { UserProfileFindManyArgs } from "../../userProfile/base/UserProfileFindManyArgs";
-import { UserProfile } from "../../userProfile/base/UserProfile";
-import { UserProfileWhereUniqueInput } from "../../userProfile/base/UserProfileWhereUniqueInput";
 
 export class UserControllerBase {
   constructor(protected readonly service: UserService) {}
@@ -39,12 +33,14 @@ export class UserControllerBase {
       select: {
         createdAt: true,
         email: true,
+        events: true,
         firstName: true,
         id: true,
         lastName: true,
         roles: true,
         updatedAt: true,
         username: true,
+        userProfiles: true,
       },
     });
   }
@@ -59,12 +55,14 @@ export class UserControllerBase {
       select: {
         createdAt: true,
         email: true,
+        events: true,
         firstName: true,
         id: true,
         lastName: true,
         roles: true,
         updatedAt: true,
         username: true,
+        userProfiles: true,
       },
     });
   }
@@ -80,12 +78,14 @@ export class UserControllerBase {
       select: {
         createdAt: true,
         email: true,
+        events: true,
         firstName: true,
         id: true,
         lastName: true,
         roles: true,
         updatedAt: true,
         username: true,
+        userProfiles: true,
       },
     });
     if (result === null) {
@@ -110,12 +110,14 @@ export class UserControllerBase {
         select: {
           createdAt: true,
           email: true,
+          events: true,
           firstName: true,
           id: true,
           lastName: true,
           roles: true,
           updatedAt: true,
           username: true,
+          userProfiles: true,
         },
       });
     } catch (error) {
@@ -140,12 +142,14 @@ export class UserControllerBase {
         select: {
           createdAt: true,
           email: true,
+          events: true,
           firstName: true,
           id: true,
           lastName: true,
           roles: true,
           updatedAt: true,
           username: true,
+          userProfiles: true,
         },
       });
     } catch (error) {
@@ -156,172 +160,5 @@ export class UserControllerBase {
       }
       throw error;
     }
-  }
-
-  @common.Get("/:id/events")
-  @ApiNestedQuery(EventFindManyArgs)
-  async findEvents(
-    @common.Req() request: Request,
-    @common.Param() params: UserWhereUniqueInput
-  ): Promise<Event[]> {
-    const query = plainToClass(EventFindManyArgs, request.query);
-    const results = await this.service.findEvents(params.id, {
-      ...query,
-      select: {
-        createdAt: true,
-        description: true,
-        endTime: true,
-        id: true,
-        location: true,
-        startTime: true,
-        title: true,
-        updatedAt: true,
-
-        user: {
-          select: {
-            id: true,
-          },
-        },
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results;
-  }
-
-  @common.Post("/:id/events")
-  async connectEvents(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: EventWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      events: {
-        connect: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Patch("/:id/events")
-  async updateEvents(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: EventWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      events: {
-        set: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Delete("/:id/events")
-  async disconnectEvents(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: EventWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      events: {
-        disconnect: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Get("/:id/userProfiles")
-  @ApiNestedQuery(UserProfileFindManyArgs)
-  async findUserProfiles(
-    @common.Req() request: Request,
-    @common.Param() params: UserWhereUniqueInput
-  ): Promise<UserProfile[]> {
-    const query = plainToClass(UserProfileFindManyArgs, request.query);
-    const results = await this.service.findUserProfiles(params.id, {
-      ...query,
-      select: {
-        bio: true,
-        createdAt: true,
-        id: true,
-        profilePicture: true,
-        updatedAt: true,
-
-        user: {
-          select: {
-            id: true,
-          },
-        },
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results;
-  }
-
-  @common.Post("/:id/userProfiles")
-  async connectUserProfiles(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: UserProfileWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      userProfiles: {
-        connect: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Patch("/:id/userProfiles")
-  async updateUserProfiles(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: UserProfileWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      userProfiles: {
-        set: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Delete("/:id/userProfiles")
-  async disconnectUserProfiles(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: UserProfileWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      userProfiles: {
-        disconnect: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
   }
 }

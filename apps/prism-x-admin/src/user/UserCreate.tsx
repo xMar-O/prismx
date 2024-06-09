@@ -5,13 +5,10 @@ import {
   SimpleForm,
   CreateProps,
   TextInput,
-  ReferenceArrayInput,
-  SelectArrayInput,
   PasswordInput,
+  SelectArrayInput,
 } from "react-admin";
 
-import { EventTitle } from "../event/EventTitle";
-import { UserProfileTitle } from "../userProfile/UserProfileTitle";
 import { ROLES_OPTIONS } from "../user/RolesOptions";
 
 export const UserCreate = (props: CreateProps): React.ReactElement => {
@@ -19,14 +16,7 @@ export const UserCreate = (props: CreateProps): React.ReactElement => {
     <Create {...props}>
       <SimpleForm>
         <TextInput label="Email" source="email" type="email" />
-        <ReferenceArrayInput
-          source="events"
-          reference="Event"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
-        >
-          <SelectArrayInput optionText={EventTitle} />
-        </ReferenceArrayInput>
+        <div />
         <TextInput label="First Name" source="firstName" />
         <TextInput label="Last Name" source="lastName" />
         <PasswordInput label="Password" source="password" />
@@ -37,14 +27,7 @@ export const UserCreate = (props: CreateProps): React.ReactElement => {
           optionValue="value"
         />
         <TextInput label="Username" source="username" />
-        <ReferenceArrayInput
-          source="userProfiles"
-          reference="UserProfile"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
-        >
-          <SelectArrayInput optionText={UserProfileTitle} />
-        </ReferenceArrayInput>
+        <div />
       </SimpleForm>
     </Create>
   );

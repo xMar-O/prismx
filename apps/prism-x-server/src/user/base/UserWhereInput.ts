@@ -13,10 +13,9 @@ import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { Type } from "class-transformer";
-import { IsOptional, ValidateNested } from "class-validator";
-import { EventListRelationFilter } from "../../event/base/EventListRelationFilter";
+import { IsOptional } from "class-validator";
+import { JsonFilter } from "../../util/JsonFilter";
 import { StringFilter } from "../../util/StringFilter";
-import { UserProfileListRelationFilter } from "../../userProfile/base/UserProfileListRelationFilter";
 
 @InputType()
 class UserWhereInput {
@@ -33,15 +32,14 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => EventListRelationFilter,
+    type: JsonFilter,
   })
-  @ValidateNested()
-  @Type(() => EventListRelationFilter)
+  @Type(() => JsonFilter)
   @IsOptional()
-  @Field(() => EventListRelationFilter, {
+  @Field(() => JsonFilter, {
     nullable: true,
   })
-  events?: EventListRelationFilter;
+  events?: JsonFilter;
 
   @ApiProperty({
     required: false,
@@ -89,15 +87,14 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => UserProfileListRelationFilter,
+    type: JsonFilter,
   })
-  @ValidateNested()
-  @Type(() => UserProfileListRelationFilter)
+  @Type(() => JsonFilter)
   @IsOptional()
-  @Field(() => UserProfileListRelationFilter, {
+  @Field(() => JsonFilter, {
     nullable: true,
   })
-  userProfiles?: UserProfileListRelationFilter;
+  userProfiles?: JsonFilter;
 }
 
 export { UserWhereInput as UserWhereInput };

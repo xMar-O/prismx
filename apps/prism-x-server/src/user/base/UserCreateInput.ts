@@ -11,13 +11,10 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, ValidateNested } from "class-validator";
-import { EventCreateNestedManyWithoutUsersInput } from "./EventCreateNestedManyWithoutUsersInput";
-import { Type } from "class-transformer";
+import { IsString, IsOptional } from "class-validator";
 import { IsJSONValue } from "../../validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
-import { UserProfileCreateNestedManyWithoutUsersInput } from "./UserProfileCreateNestedManyWithoutUsersInput";
 
 @InputType()
 class UserCreateInput {
@@ -34,15 +31,13 @@ class UserCreateInput {
 
   @ApiProperty({
     required: false,
-    type: () => EventCreateNestedManyWithoutUsersInput,
   })
-  @ValidateNested()
-  @Type(() => EventCreateNestedManyWithoutUsersInput)
+  @IsJSONValue()
   @IsOptional()
-  @Field(() => EventCreateNestedManyWithoutUsersInput, {
+  @Field(() => GraphQLJSON, {
     nullable: true,
   })
-  events?: EventCreateNestedManyWithoutUsersInput;
+  events?: InputJsonValue;
 
   @ApiProperty({
     required: false,
@@ -91,15 +86,13 @@ class UserCreateInput {
 
   @ApiProperty({
     required: false,
-    type: () => UserProfileCreateNestedManyWithoutUsersInput,
   })
-  @ValidateNested()
-  @Type(() => UserProfileCreateNestedManyWithoutUsersInput)
+  @IsJSONValue()
   @IsOptional()
-  @Field(() => UserProfileCreateNestedManyWithoutUsersInput, {
+  @Field(() => GraphQLJSON, {
     nullable: true,
   })
-  userProfiles?: UserProfileCreateNestedManyWithoutUsersInput;
+  userProfiles?: InputJsonValue;
 }
 
 export { UserCreateInput as UserCreateInput };

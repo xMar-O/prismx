@@ -11,13 +11,10 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, ValidateNested } from "class-validator";
-import { EventUpdateManyWithoutUsersInput } from "./EventUpdateManyWithoutUsersInput";
-import { Type } from "class-transformer";
+import { IsString, IsOptional } from "class-validator";
 import { IsJSONValue } from "../../validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
-import { UserProfileUpdateManyWithoutUsersInput } from "./UserProfileUpdateManyWithoutUsersInput";
 
 @InputType()
 class UserUpdateInput {
@@ -34,15 +31,13 @@ class UserUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: () => EventUpdateManyWithoutUsersInput,
   })
-  @ValidateNested()
-  @Type(() => EventUpdateManyWithoutUsersInput)
+  @IsJSONValue()
   @IsOptional()
-  @Field(() => EventUpdateManyWithoutUsersInput, {
+  @Field(() => GraphQLJSON, {
     nullable: true,
   })
-  events?: EventUpdateManyWithoutUsersInput;
+  events?: InputJsonValue;
 
   @ApiProperty({
     required: false,
@@ -100,15 +95,13 @@ class UserUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: () => UserProfileUpdateManyWithoutUsersInput,
   })
-  @ValidateNested()
-  @Type(() => UserProfileUpdateManyWithoutUsersInput)
+  @IsJSONValue()
   @IsOptional()
-  @Field(() => UserProfileUpdateManyWithoutUsersInput, {
+  @Field(() => GraphQLJSON, {
     nullable: true,
   })
-  userProfiles?: UserProfileUpdateManyWithoutUsersInput;
+  userProfiles?: InputJsonValue;
 }
 
 export { UserUpdateInput as UserUpdateInput };
